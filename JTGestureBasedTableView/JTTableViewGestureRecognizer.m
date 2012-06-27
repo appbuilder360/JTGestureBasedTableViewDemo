@@ -209,8 +209,13 @@ CGFloat const JTTableViewRowAnimationDuration          = 0.25;       // Rough gu
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
         CGPoint translation = [recognizer translationInView:self.tableView];
+
+        if(translation.x > 0 ? JTTableViewCellEditingStateRight : JTTableViewCellEditingStateLeft  == JTTableViewCellEditingStateRight) {
+            return;
+        }
         cell.contentView.frame = CGRectOffset(cell.contentView.bounds, translation.x, 0);
 
+        
         if ([self.delegate respondsToSelector:@selector(gestureRecognizer:didChangeContentViewTranslation:forRowAtIndexPath:)]) {
             [self.delegate gestureRecognizer:self didChangeContentViewTranslation:translation forRowAtIndexPath:indexPath];
         }

@@ -207,6 +207,7 @@ CGFloat const JTTableViewRowAnimationDuration          = 0.25;       // Rough gu
         self.state = JTTableViewGestureRecognizerStatePanning;
         
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        
 
         CGPoint translation = [recognizer translationInView:self.tableView];
 
@@ -214,6 +215,7 @@ CGFloat const JTTableViewRowAnimationDuration          = 0.25;       // Rough gu
            // return;
         } else {
             cell.contentView.frame = CGRectOffset(cell.contentView.bounds, translation.x, 0);
+            cell.backgroundView.frame = CGRectOffset(cell.backgroundView.bounds, translation.x, 0);
         }
         
         if ([self.delegate respondsToSelector:@selector(gestureRecognizer:didChangeContentViewTranslation:forRowAtIndexPath:)]) {
@@ -247,6 +249,7 @@ CGFloat const JTTableViewRowAnimationDuration          = 0.25;       // Rough gu
         self.addingIndexPath = nil;
 
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        
         CGPoint translation = [recognizer translationInView:self.tableView];
         
         CGFloat commitEditingLength = JTTableViewCommitEditingRowDefaultLength;
@@ -260,6 +263,8 @@ CGFloat const JTTableViewRowAnimationDuration          = 0.25;       // Rough gu
         } else {
             [UIView beginAnimations:@"" context:nil];
             cell.contentView.frame = cell.contentView.bounds;
+            cell.backgroundView.frame = cell.backgroundView.bounds;
+
             [UIView commitAnimations];
         }
         

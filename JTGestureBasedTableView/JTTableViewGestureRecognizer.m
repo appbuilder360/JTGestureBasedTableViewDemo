@@ -264,6 +264,7 @@ CGFloat const JTTableViewRowAnimationDuration          = 0.25;       // Rough gu
             [UIView beginAnimations:@"" context:nil];
             cell.contentView.frame = cell.contentView.bounds;
             cell.backgroundView.frame = cell.backgroundView.bounds;
+            [self.tableView reloadData];
 
             [UIView commitAnimations];
         }

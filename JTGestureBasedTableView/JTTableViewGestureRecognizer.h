@@ -12,6 +12,7 @@ typedef enum {
     JTTableViewCellEditingStateMiddle,
     JTTableViewCellEditingStateLeft,
     JTTableViewCellEditingStateRight,
+    JTTableViewCellEditingStateBoth,
 } JTTableViewCellEditingState;
 
 extern CGFloat const JTTableViewCommitEditingRowDefaultLength;
@@ -27,6 +28,9 @@ extern CGFloat const JTTableViewRowAnimationDuration;
 @interface JTTableViewGestureRecognizer : NSObject <UITableViewDelegate>
 
 @property (nonatomic, weak, readonly) UITableView *tableView;
+@property (nonatomic, assign) JTTableViewCellEditingState allowedEditingState;
+@property (nonatomic, assign) BOOL editingAnimationLeft;
+@property (nonatomic, assign) BOOL editingAnimationRight;
 
 + (JTTableViewGestureRecognizer *)gestureRecognizerWithTableView:(UITableView *)tableView delegate:(id)delegate;
 

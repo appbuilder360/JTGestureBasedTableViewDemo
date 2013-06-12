@@ -211,12 +211,23 @@ CGFloat const JTTableViewRowAnimationDuration          = 0.25;       // Rough gu
 
         CGPoint translation = [recognizer translationInView:self.tableView];
 
-        if(translation.x > 0 ? JTTableViewCellEditingStateRight : JTTableViewCellEditingStateLeft  == JTTableViewCellEditingStateRight) {
-           // return;
+        
+        JTTableViewCellEditingState editingState = translation.x > 0 ? JTTableViewCellEditingStateRight : JTTableViewCellEditingStateLeft;
+        
+        if(editingState == JTTableViewCellEditingStateRight && (self.allowedEditingState == JTTableViewCellEditingStateRight || self.allowedEditingState == JTTableViewCellEditingStateBoth)) {
+            if(self.editingAnimationRight) {
+                cell.contentView.frame = CGRectOffset(cell.contentView.bounds, translation.x, 0);
+                cell.backgroundView.frame = CGRectOffset(cell.backgroundView.bounds, translation.x, 0);
+            }
+        } else if(editingState == JTTableViewCellEditingStateLeft && (self.allowedEditingState == JTTableViewCellEditingStateLeft || self.allowedEditingState == JTTableViewCellEditingStateBoth)) {
+            if(self.editingAnimationLeft) {
+                cell.contentView.frame = CGRectOffset(cell.contentView.bounds, translation.x, 0);
+                cell.backgroundView.frame = CGRectOffset(cell.backgroundView.bounds, translation.x, 0);
+            }
         } else {
-            cell.contentView.frame = CGRectOffset(cell.contentView.bounds, translation.x, 0);
-            cell.backgroundView.frame = CGRectOffset(cell.backgroundView.bounds, translation.x, 0);
+            return;
         }
+        
         
         if ([self.delegate respondsToSelector:@selector(gestureRecognizer:didChangeContentViewTranslation:forRowAtIndexPath:)]) {
             [self.delegate gestureRecognizer:self didChangeContentViewTranslation:translation forRowAtIndexPath:indexPath];
